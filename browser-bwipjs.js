@@ -13,6 +13,7 @@ var bwipp = require('./bwipp'),
 	fontlib = require('./browser-fonts')
 	;
 
+var toCanvas;
 // This module's one and only export is the canvas rendering.
 // `cvs` is either an id to a canvas element, or the actual canvas element.
 // `opts` is the bwip-js/BWIPP options object.
@@ -21,7 +22,7 @@ var bwipp = require('./bwipp'),
 //		function (err, cvs)
 //
 // Where cvs is the same parameter as passed into this call.
-module.exports = function toCanvas(cvs, opts, callback) {
+module.exports = toCanvas = function toCanvas(cvs, opts, callback) {
 	// Make a mutable copy of the user's options
 	var vals = {};
 	for (var id in opts) {
@@ -29,16 +30,16 @@ module.exports = function toCanvas(cvs, opts, callback) {
 	}
 
 	// Set the defaults
-	var scale	= vals.scale || 2;
+	var scale	= vals.scale || 4;
 	var scaleX	= +vals.scaleX || scale;
 	var scaleY	= +vals.scaleY || scaleX;
 	var rot		= vals.rotate || 'N';
 	var mono	= vals.monochrome || false;
-	var padX	= +vals.paddingwidth || 0;
-	var padY	= +vals.paddingheight || 0;
+	var padX	= +vals.paddingwidth || 4;
+	var padY	= +vals.paddingheight || 4;
 
 	// The required parameters
-	var bcid	= vals.bcid;
+	var bcid	= vals.bcid || 'datamatrix';
 	var text	= vals.text;
 
 	if (!text) {
@@ -91,19 +92,17 @@ module.exports = function toCanvas(cvs, opts, callback) {
 	// Call into the BWIPP cross-compiled code
 	try {
 		bwipp()(bw, bcid, text, vals);
-
-		// Let the font manager demand-load any fonts.
-		fontlib.loadfonts(function(err) {
-			if (err) {
-				callback(err);
-			} else {
-				bw.render(callback);
-			}
-		});
+		bw.render(callback);
 	} catch (e) {
 		callback(e.stack || e);
 	}
 }
+
+globalThis.dataMatrix = (text, opts={}) => new Promise(resolve => toCanvas(
+	document.createElement('canvas'),
+	{...opts, text},
+	(err, cvs) => resolve(cvs)
+));
 
 module.exports.bwipjs_version = bwipjs.VERSION;
 module.exports.bwipp_version = bwipp.VERSION;

@@ -8,7 +8,8 @@
     "bwip-js": "./bin/node-bwipjs.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack-cli browser-bwipjs.js --output-filename dataMatrix.js"
   },
   "repository": {
     "type": "git",
@@ -44,5 +45,9 @@
   "homepage": "https://github.com/metafloor/bwip-js",
   "dependencies": {
     "argv": "0.0.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
   }
 }
