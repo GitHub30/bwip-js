@@ -273,6 +273,7 @@ bwipjs.toBuffer({
     });
 ```
 
+## Options
 Only the first two options `bcid` and `text` are required.  The other bwip-js
 specific options are:
 
