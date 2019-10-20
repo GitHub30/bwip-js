@@ -10,6 +10,7 @@
 </script>
 ```
 [Demo](https://codepen.io/04/pen/bGGBjLO)
+[Options](#options)
 
 ## Build
 ```bash
