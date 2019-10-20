@@ -1,3 +1,21 @@
+# // Data Matrix Writer in Browser
+## Usage
+```html
+<script src="https://rawcdn.githack.com/GitHub30/dataMatrix.js/97edc524c04db3d30a3fdf00c1fd0988cfa82888/dist/dataMatrix.js"></script>
+<script>
+  dataMatrix('0123456789')
+    .then(canvas => document.body.appendChild(canvas))
+</script>
+```
+[Demo](https://codepen.io/04/pen/bGGBjLO)
+
+## Build
+```bash
+git clone https://github.com/GitHub30/dataMatrix.js
+cd dataMatrix.js/
+npm run build
+```
+
 # // Barcode Writer in Pure JavaScript
 
 
