@@ -5,6 +5,8 @@
 <script>
   dataMatrix('0123456789')
     .then(canvas => document.body.appendChild(canvas))
+  dataMatrix('0123456789', {scale:8})
+    .then(canvas => document.body.appendChild(canvas))
 </script>
 ```
 [Demo](https://codepen.io/04/pen/bGGBjLO)
